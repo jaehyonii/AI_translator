@@ -1,0 +1,10 @@
+[project]
+name = "ai-translator"
+version = "0.1.0"
+description = "Competition-oriented LLM translation assistant pipeline"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+ai-translator = "ai_translator.cli:main"
+
