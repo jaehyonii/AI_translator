@@ -56,7 +56,7 @@ class OpenAICompatibleProvider:
     api_key: str
     model: str
     base_url: str = "https://api.openai.com/v1/chat/completions"
-    temperature: float = 0.2
+    temperature: float | None = None
     timeout_seconds: int = 120
 
     @classmethod
@@ -66,7 +66,7 @@ class OpenAICompatibleProvider:
         api_key_env: str = "LLM_API_KEY",
         model_env: str = "LLM_MODEL",
         base_url_env: str = "LLM_BASE_URL",
-        temperature: float = 0.2,
+        temperature: float | None = None,
     ) -> "OpenAICompatibleProvider":
         api_key = os.getenv(api_key_env, "").strip()
         model = os.getenv(model_env, "").strip()
@@ -81,8 +81,9 @@ class OpenAICompatibleProvider:
         payload = {
             "model": self.model,
             "messages": [{"role": item.role, "content": item.content} for item in messages],
-            "temperature": self.temperature,
         }
+        if self.temperature is not None:
+            payload["temperature"] = self.temperature
         data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         request = urllib.request.Request(
             self.base_url,

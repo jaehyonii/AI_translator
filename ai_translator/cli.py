@@ -71,8 +71,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--temperature",
         type=float,
-        default=0.2,
-        help="LLM temperature.",
+        default=None,
+        help="LLM temperature. Omit by default for models that only support the provider default.",
     )
     parser.add_argument(
         "--no-score",
